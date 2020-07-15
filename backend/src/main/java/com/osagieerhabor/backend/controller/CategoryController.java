@@ -1,6 +1,7 @@
 package com.osagieerhabor.backend.controller;
 
 import com.osagieerhabor.backend.dto.CategoryDto;
+import com.osagieerhabor.backend.exceptions.CategoryNotFoundException;
 import com.osagieerhabor.backend.model.Category;
 import com.osagieerhabor.backend.services.CategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,9 @@ public class CategoryController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
+        Category category = categoryService.findById(id);
+        if (category == null)
+            throw new CategoryNotFoundException("id: " + id);
         return ResponseEntity.ok(categoryService.findById(id));
     }
 }
