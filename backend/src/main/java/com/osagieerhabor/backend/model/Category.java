@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,6 +26,10 @@ public class Category extends BaseModel<Category> {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "parent")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Category> children;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<ProductType> productTypes;
 
     @NotNull
     @Column(columnDefinition = "varchar(255) default 'fa fa-circle'")
