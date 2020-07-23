@@ -31,13 +31,12 @@ public class Category extends BaseModel<Category> {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ProductType> productTypes;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private List<Product> product;
+
     @NotNull
     @Column(columnDefinition = "varchar(255) default 'fa fa-circle'")
     private String icon;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EnabledStatus enabled = EnabledStatus.DISABLED;
 
     @NotNull
     @Column(unique = true, length = 50)

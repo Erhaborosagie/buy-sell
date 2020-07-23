@@ -19,7 +19,6 @@ public class CategoryDto {
     private Long parentId;
 
     private Category parent;
-    private Set<Category> children;
 
     public Category toCategory(){
         Category category = new Category();
