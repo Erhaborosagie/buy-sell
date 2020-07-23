@@ -1,14 +1,12 @@
 package com.osagieerhabor.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.osagieerhabor.backend.enums.EnabledStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,4 +22,8 @@ public abstract class BaseModel<T> {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EnabledStatus enabled = EnabledStatus.DISABLED;
 }

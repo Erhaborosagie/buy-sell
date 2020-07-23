@@ -23,6 +23,7 @@ public class Product extends BaseModel<Product> {
     @NotNull
     private String image;
 
+    @NotNull
     private String description;
 
     @NotNull

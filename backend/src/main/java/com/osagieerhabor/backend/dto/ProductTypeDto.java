@@ -15,9 +15,14 @@ public class ProductTypeDto {
     @NotNull
     private Long category_id;
 
+    private Category category;
+
+
+
     public ProductType toProductType(){
         ProductType productType = new ProductType();
         productType.setName(name);
+        productType.setCategory(category);
         return productType;
     }
 }
