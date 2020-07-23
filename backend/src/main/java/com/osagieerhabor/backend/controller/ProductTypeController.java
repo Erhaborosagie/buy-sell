@@ -21,6 +21,10 @@ public class ProductTypeController {
 
     @PostMapping
     public ResponseEntity<?> addProductType(@RequestBody ProductTypeDto productTypeDto){
+        Category category = categoryService.findById(productTypeDto.getCategory_id());
+        if (category == null)
+            throw new CategoryNotFoundException("No category with id " + productTypeDto.getCategory_id());
+        productTypeDto.setCategory(category);
         return ResponseEntity.ok(productTypeService.addProductType(productTypeDto));
     }
 
@@ -34,7 +38,7 @@ public class ProductTypeController {
         return ResponseEntity.ok(productTypeService.findById(id));
     }
 
-        @GetMapping("category/{id}")
+    @GetMapping("category/{id}")
     public ResponseEntity<?> getProductTypeByCategoryId(@PathVariable Long id){
         Category category = categoryService.findById(id);
         if (category == null)
