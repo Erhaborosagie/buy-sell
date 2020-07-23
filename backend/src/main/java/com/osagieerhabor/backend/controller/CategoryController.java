@@ -30,7 +30,7 @@ public class CategoryController {
         if (null != categoryDto.getParentId()){
             Category category = categoryService.findById(categoryDto.getParentId());
             if (category == null) {
-                categoryDto.setParent(null);
+                throw new CategoryNotFoundException("No category with id " + categoryDto.getParentId());
             }else {
                 categoryDto.setParent(category);
             }
