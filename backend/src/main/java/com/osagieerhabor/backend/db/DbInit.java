@@ -23,10 +23,10 @@ public class DbInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (userRepository.findAll().size() == 0){
-            userRepository.deleteAll();//
+            userRepository.deleteAll();//No need for this
 
-            User dan = new User("user", passwordEncoder.encode("user@123"), "USER", "");
-            User admin = new User("admin", passwordEncoder.encode("admin@123"), "ADMIN", "ACCESS_ALL", EnabledStatus.ENABLED);
+            User dan = new User("user@123.com", passwordEncoder.encode("user@123.com"), "USER", "");
+            User admin = new User("admin@123.com", passwordEncoder.encode("admin@123.com"), "ADMIN", "ACCESS_ALL", EnabledStatus.ENABLED);
 
             List<User> users = Arrays.asList(dan, admin);
 

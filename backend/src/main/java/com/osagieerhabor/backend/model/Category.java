@@ -28,10 +28,11 @@ public class Category extends BaseModel<Category> {
     private Set<Category> children;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     private List<ProductType> productTypes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @JsonIgnore
     private List<Product> product;
 
     @NotNull

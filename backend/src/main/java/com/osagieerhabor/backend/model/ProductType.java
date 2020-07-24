@@ -1,5 +1,6 @@
 package com.osagieerhabor.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class ProductType extends BaseModel<ProductType> {
     private Category category;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productType")
+    @JsonIgnore
     private List<Product> product;
 
     @Override

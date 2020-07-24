@@ -36,7 +36,7 @@ public class Product extends BaseModel<Product> {
     private int sold=0;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProductType productType;
 
     @NotNull
@@ -45,7 +45,7 @@ public class Product extends BaseModel<Product> {
 
     @ManyToOne
     @NotNull
-    private Supplier suppliers;
+    private Supplier supplier;
 
     @PrePersist
     public void saving() {
