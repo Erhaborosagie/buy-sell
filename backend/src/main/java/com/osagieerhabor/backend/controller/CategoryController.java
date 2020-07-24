@@ -1,7 +1,7 @@
 package com.osagieerhabor.backend.controller;
 
 import com.osagieerhabor.backend.dto.CategoryDto;
-import com.osagieerhabor.backend.exceptions.CategoryNotFoundException;
+import com.osagieerhabor.backend.exceptions.ResourceNotFoundException;
 import com.osagieerhabor.backend.model.Category;
 import com.osagieerhabor.backend.services.CategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class CategoryController {
         if (null != categoryDto.getParentId()){
             Category category = categoryService.findById(categoryDto.getParentId());
             if (category == null) {
-                throw new CategoryNotFoundException("No category with id " + categoryDto.getParentId());
+                throw new ResourceNotFoundException("No category with id " + categoryDto.getParentId());
             }else {
                 categoryDto.setParent(category);
             }
@@ -42,7 +42,7 @@ public class CategoryController {
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
         Category category = categoryService.findById(id);
         if (category == null)
-            throw new CategoryNotFoundException("id: " + id);
+            throw new ResourceNotFoundException("id: " + id);
         return ResponseEntity.ok(categoryService.findById(id));
     }
 }

@@ -3,8 +3,7 @@ package com.osagieerhabor.backend.controller;
 import com.osagieerhabor.backend.dto.GeneralDto;
 import com.osagieerhabor.backend.dto.ProductDto;
 import com.osagieerhabor.backend.enums.EnabledStatus;
-import com.osagieerhabor.backend.exceptions.BuySellException;
-import com.osagieerhabor.backend.exceptions.ProductNotFoundException;
+import com.osagieerhabor.backend.exceptions.ResourceNotFoundException;
 import com.osagieerhabor.backend.model.Category;
 import com.osagieerhabor.backend.model.Product;
 import com.osagieerhabor.backend.model.ProductType;
@@ -44,7 +43,7 @@ public class ProductController {
         Product product = productService.findById(id);
 
         if (product == null){
-            throw  new ProductNotFoundException("No product with id " + id);
+            throw  new ResourceNotFoundException("No product with id " + id);
         }
 
         return ResponseEntity.ok(product);
@@ -70,11 +69,11 @@ public class ProductController {
 
         Supplier supplier = supplierRepository.findById(supplier_id).orElse(null);
         if (supplier == null)
-            throw new BuySellException("No supplier with id -" + supplier_id);
+            throw new ResourceNotFoundException("No supplier with id -" + supplier_id);
 
         ProductType productType = productTypeService.findById(productDto.getProduct_type_id());
         if (productType == null)
-            throw new BuySellException("No productType with id -" + productDto.getProduct_type_id());
+            throw new ResourceNotFoundException("No productType with id -" + productDto.getProduct_type_id());
 
         Category category = productType.getCategory();
 
@@ -110,7 +109,7 @@ public class ProductController {
         if (generalDto.getStatus()== EnabledStatus.ENABLED || generalDto.getStatus()==EnabledStatus.DISABLED){
             Product product = productService.findById(id);
             if(product==null)
-                throw new ProductNotFoundException("No product with id -" + id);
+                throw new ResourceNotFoundException("No product with id -" + id);
             productService.changeStatus(generalDto.getStatus(), id);
             return ResponseEntity.ok("Product status changed");
         }else return ResponseEntity.badRequest().body("Enter status as ENABLED or DISABLED");

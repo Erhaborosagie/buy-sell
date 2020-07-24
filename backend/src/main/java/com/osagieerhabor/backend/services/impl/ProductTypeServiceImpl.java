@@ -1,7 +1,7 @@
 package com.osagieerhabor.backend.services.impl;
 
 import com.osagieerhabor.backend.dto.ProductTypeDto;
-import com.osagieerhabor.backend.exceptions.CategoryNotFoundException;
+import com.osagieerhabor.backend.exceptions.ResourceNotFoundException;
 import com.osagieerhabor.backend.model.Category;
 import com.osagieerhabor.backend.model.ProductType;
 import com.osagieerhabor.backend.repositories.ProductTypeRepository;
@@ -40,7 +40,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ProductType addProductType(ProductTypeDto productTypeDto) {
         Category category = categoryService.findById(productTypeDto.getCategory_id());
         if (category == null)
-            throw new CategoryNotFoundException(productTypeDto.getCategory_id() + "is an invalid category id");
+            throw new ResourceNotFoundException(productTypeDto.getCategory_id() + "is an invalid category id");
         ProductType productType = productTypeDto.toProductType();
         productType.setCategory(category);
         return productTypeRepository.saveAndFlush(productType);

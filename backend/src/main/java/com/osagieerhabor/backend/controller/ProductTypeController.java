@@ -1,8 +1,9 @@
 package com.osagieerhabor.backend.controller;
 
 import com.osagieerhabor.backend.dto.ProductTypeDto;
-import com.osagieerhabor.backend.exceptions.CategoryNotFoundException;
+import com.osagieerhabor.backend.exceptions.ResourceNotFoundException;
 import com.osagieerhabor.backend.model.Category;
+import com.osagieerhabor.backend.model.ProductType;
 import com.osagieerhabor.backend.services.CategoryService;
 import com.osagieerhabor.backend.services.ProductTypeService;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ProductTypeController {
     public ResponseEntity<?> addProductType(@RequestBody ProductTypeDto productTypeDto){
         Category category = categoryService.findById(productTypeDto.getCategory_id());
         if (category == null)
-            throw new CategoryNotFoundException("No category with id " + productTypeDto.getCategory_id());
+            throw new ResourceNotFoundException("No category with id " + productTypeDto.getCategory_id());
         productTypeDto.setCategory(category);
         return ResponseEntity.ok(productTypeService.addProductType(productTypeDto));
     }
@@ -35,14 +36,17 @@ public class ProductTypeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        return ResponseEntity.ok(productTypeService.findById(id));
+        ProductType productType = productTypeService.findById(id);
+        if (productType == null)
+            throw new ResourceNotFoundException(id + "not a valid product type");
+        return ResponseEntity.ok(productType);
     }
 
     @GetMapping("category/{id}")
     public ResponseEntity<?> getProductTypeByCategoryId(@PathVariable Long id){
         Category category = categoryService.findById(id);
         if (category == null)
-            throw new CategoryNotFoundException(id + "is an invalid category id");
+            throw new ResourceNotFoundException(id + "is an invalid category id");
         return ResponseEntity.ok(productTypeService.getProductTypeByCategory(category));
     }
 }
